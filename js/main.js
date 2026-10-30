@@ -47,14 +47,10 @@
   const songOfPhoto = new Map();
   songs.forEach((_, s) => songOfPhoto.set(2 + s * 6, s));
 
-  const photoCaption = [];
-
   photos.forEach((src, i) => {
     const r = rand();
     const size = r < 0.08 ? "xl" : r < 0.2 ? "lg" : r < 0.5 ? "md" : "sm";
     const ar = size === "xl" || size === "lg" ? pick(["4 / 3", "1 / 1", "5 / 4"]) : pick(["4 / 5", "3 / 4", "1 / 1", "4 / 5"]);
-    const caption = rand() < 0.42 ? pick(window.CAPTIONS) : "";
-    photoCaption[i] = caption;
 
     const item = el("div", "item " + size);
     item.style.setProperty("--r", tilt(4));
@@ -68,9 +64,9 @@
     btn.setAttribute("aria-label", "Xem ảnh " + (i + 1));
     btn.style.setProperty("--ar", ar);
     const img = el("img");
-    img.src = src; img.alt = caption || "Ảnh kỷ niệm " + (i + 1);
+    img.src = src; img.alt = "Ảnh kỷ niệm " + (i + 1);
     img.loading = "lazy"; img.decoding = "async";
-    btn.append(img, el("span", "cap", caption));
+    btn.append(img);
     btn.addEventListener("click", () => openLightbox(i));
     item.append(btn);
 
@@ -158,8 +154,8 @@
   function showPhoto(i) {
     lbIndex = (i + photos.length) % photos.length;
     lbImg.src = photos[lbIndex];
-    lbImg.alt = photoCaption[lbIndex] || "Ảnh kỷ niệm " + (lbIndex + 1);
-    lbCap.textContent = (photoCaption[lbIndex] ? photoCaption[lbIndex] + " · " : "") + (lbIndex + 1) + " / " + photos.length;
+    lbImg.alt = "Ảnh kỷ niệm " + (lbIndex + 1);
+    lbCap.textContent = (lbIndex + 1) + " / " + photos.length;
   }
   function openLightbox(i) { showPhoto(i); lb.hidden = false; $("lbClose").focus(); }
   const closeLightbox = () => { lb.hidden = true; };

@@ -98,13 +98,6 @@ window.WISHES = [
   "Mong cô luôn giữ được nụ cười thật tươi, từ trong lòng ra ngoài ✨",
 ];
 
-// Chú thích ngắn cho một vài tấm Polaroid.
-window.CAPTIONS = [
-  "một ngày thật đẹp", "nụ cười này ♡", "khoảnh khắc nhỏ", "lưu lại nhé",
-  "ngày nắng", "hôm ấy…", "mãi nhớ ♡", "bình yên", "xinh ghê", "kỷ niệm",
-  "giữ lại chút nắng", "một chút vui",
-];
-
 // Lá thư cuối album – hãy sửa lại bằng lời của chính em nhé.
 window.LETTER = {
   greeting: "Gửi cô của em,",
