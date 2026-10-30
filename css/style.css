@@ -127,10 +127,11 @@ img { display: block; max-width: 100%; }
   background: rgba(201, 220, 188, .8); transform: rotate(-3deg);
 }
 .album {
+  position: relative;
   display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-flow: dense;
   gap: 34px 26px; align-items: center;
 }
-.item { position: relative; grid-column: span 3; opacity: 0; transform: translateY(30px) rotate(var(--r, 0deg)); transition: opacity .7s ease, transform .7s ease; }
+.item { position: relative; z-index: 1; grid-column: span 3; opacity: 0; transform: translateY(30px) rotate(var(--r, 0deg)); transition: opacity .7s ease, transform .7s ease; }
 .item.in { opacity: 1; transform: rotate(var(--r, 0deg)); }
 .item.md { grid-column: span 4; }
 .item.lg { grid-column: span 5; }
@@ -158,6 +159,27 @@ img { display: block; max-width: 100%; }
 }
 .note-btn.playing { background: var(--pink); }
 @keyframes pulse { 50% { transform: scale(1.12); } }
+
+/* Con đường & xe máy */
+.road { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; }
+.road path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.road-edge { stroke: var(--paper); stroke-width: 34; filter: drop-shadow(0 2px 3px rgba(90,60,40,.15)); }
+.road-base { stroke: #d3c2b1; stroke-width: 26; }
+.road-line { stroke: #fff; stroke-width: 2.5; stroke-dasharray: 12 12; }
+.road-sign { position: absolute; z-index: 2; font-size: 32px; line-height: 1; transform: translate(-50%, -90%); pointer-events: none; filter: drop-shadow(0 3px 4px rgba(90,60,40,.2)); }
+.bike {
+  position: absolute; left: 0; top: 0; z-index: 5; width: 80px; height: 62.5px;
+  pointer-events: none; transform-origin: 41px 50px; will-change: transform;
+  filter: drop-shadow(0 3px 3px rgba(90,60,40,.25));
+}
+.bike svg { display: block; overflow: visible; }
+.bike .wheel, .bike .puff { transform-box: fill-box; transform-origin: center; }
+.bike .puff { opacity: 0; }
+.bike.moving .wheel { animation: spin .45s linear infinite; }
+.bike.moving .ride { animation: bob .25s ease-in-out infinite alternate; }
+.bike.moving .puff { animation: puff .6s ease-out infinite; }
+@keyframes bob { to { transform: translateY(-1.5px); } }
+@keyframes puff { from { opacity: .8; transform: scale(.6); } to { opacity: 0; transform: translate(-10px, -4px) scale(1.7); } }
 
 /* Giấy note câu nói */
 .quote-note {
@@ -317,6 +339,9 @@ img { display: block; max-width: 100%; }
   .polaroid { padding: 6px 6px 26px; }
   .quote-note { font-size: 16px; padding: 22px 12px 12px; }
   .deco-btn { font-size: 44px; }
+  .road-edge { stroke-width: 28; }
+  .road-base { stroke-width: 21; }
+  .road-sign { font-size: 26px; }
   .player { left: 16px; right: 16px; width: auto; }
   .player.mini { left: auto; width: 64px; }
 }

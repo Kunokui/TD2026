@@ -10,6 +10,7 @@
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pick = (arr) => arr[Math.floor(rand() * arr.length)];
   const tilt = (max) => ((rand() * 2 - 1) * max).toFixed(1) + "deg";
 
@@ -118,6 +119,120 @@
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
   }, { rootMargin: "0px 0px -8% 0px" });
   grid.querySelectorAll(".item").forEach((n) => io.observe(n));
+
+  /* ---------------- Con đường & xe máy ---------------- */
+  // Đường uốn lượn qua các khe giữa những hàng ảnh, xe máy chạy theo khi cuộn trang
+  const SVGNS = "http://www.w3.org/2000/svg";
+  const road = document.createElementNS(SVGNS, "svg");
+  road.classList.add("road");
+  road.setAttribute("aria-hidden", "true");
+  road.innerHTML = '<path class="road-edge"/><path class="road-base"/><path class="road-line"/>';
+  const roadPaths = [...road.children];
+  const bike = el("div", "bike", `
+    <svg viewBox="0 0 64 50" width="80" height="62.5">
+      <circle class="puff" cx="7" cy="37" r="3" fill="#e6dccf"/>
+      <g class="ride">
+        <path d="M22 22 L25 13 L33 13 L36 22 Z" fill="#f8e3a1"/>
+        <path d="M32 15 L44 12" stroke="#f3d1bb" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="29" cy="8" r="5.5" fill="#fbe1cf"/>
+        <path d="M23 8 a6 6 0 0 1 12 0 Z" fill="#8fae84"/>
+        <circle cx="31.6" cy="8.8" r=".9" fill="#4f3a2b"/>
+        <circle cx="33" cy="10.8" r="1.1" fill="#f6c9cf"/>
+        <rect x="16" y="20" width="19" height="4.5" rx="2.2" fill="#7a5a43"/>
+        <path d="M10 36 C8 28 12 24 20 24 L34 24 C37 24 38 28 38 32 L42 32 L46 14 L49 14 L47 34 C46 37 43 38 40 38 L14 38 C12 38 10 37 10 36 Z" fill="#f6c9cf" stroke="#e79aa6" stroke-width="1.5"/>
+        <path d="M42 12 L51 11" stroke="#7a5a43" stroke-width="3" stroke-linecap="round"/>
+        <rect x="48" y="15" width="9" height="7" rx="1.5" fill="#f8e3a1" stroke="#d9b76a"/>
+        <circle cx="50.5" cy="14" r="2.2" fill="#e79aa6"/><circle cx="54.5" cy="13.2" r="2.2" fill="#f6c9cf"/>
+        <path d="M43 38 A8 8 0 0 1 57 36" fill="none" stroke="#e79aa6" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g class="wheel"><circle cx="16" cy="41" r="7" fill="#4f3a2b"/><circle cx="16" cy="41" r="3" fill="#fbf5ea"/><rect x="15.2" y="35" width="1.6" height="4" fill="#fbf5ea"/></g>
+      <g class="wheel"><circle cx="50" cy="41" r="7" fill="#4f3a2b"/><circle cx="50" cy="41" r="3" fill="#fbf5ea"/><rect x="49.2" y="35" width="1.6" height="4" fill="#fbf5ea"/></g>
+    </svg>`);
+  bike.setAttribute("aria-hidden", "true");
+  const home = el("span", "road-sign", "🏠"), school = el("span", "road-sign", "🏫");
+  grid.prepend(road);
+  grid.append(home, school, bike);
+
+  let roadLen = 0, stopY = [], stopLen = [], bikePos = 0, bikeTarget = 0, bikeRaf = 0;
+  function buildRoad() {
+    const W = grid.clientWidth;
+    // Gom các ảnh thành từng hàng theo chiều dọc
+    const bands = [];
+    [...grid.querySelectorAll(".item")]
+      .map((n) => [n.offsetTop, n.offsetTop + n.offsetHeight])
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([t, b]) => {
+        const last = bands[bands.length - 1];
+        if (last && t < last[1]) last[1] = Math.max(last[1], b); else bands.push([t, b]);
+      });
+    if (!bands.length) return;
+    const ys = [bands[0][0] - 26];
+    for (let k = 1; k < bands.length; k++) ys.push((bands[k - 1][1] + bands[k][0]) / 2);
+    ys.push(bands[bands.length - 1][1] + 34);
+
+    // Đường rắn lượn: trái → phải, quay đầu, phải → trái…
+    // Khúc cua nằm gọn trong khung để xe không bị cắt ở mép màn hình
+    const inset = 40, bend = 32;
+    let d = `M ${inset} ${ys[0]}`, xEnd = inset;
+    const prefixes = [d];
+    ys.forEach((y, k) => {
+      xEnd = k % 2 === 0 ? W - inset : inset;
+      d += ` L ${xEnd} ${y}`;
+      if (k < ys.length - 1) {
+        const cx = k % 2 === 0 ? xEnd + bend : xEnd - bend;
+        d += ` C ${cx} ${y}, ${cx} ${ys[k + 1]}, ${xEnd} ${ys[k + 1]}`;
+        prefixes.push(d);
+      }
+    });
+    road.setAttribute("width", W);
+    road.setAttribute("height", grid.clientHeight);
+    roadPaths.forEach((p) => p.setAttribute("d", d));
+    roadLen = roadPaths[0].getTotalLength();
+
+    const tmp = document.createElementNS(SVGNS, "path");
+    road.append(tmp);
+    stopLen = prefixes.map((p) => { tmp.setAttribute("d", p); return tmp.getTotalLength(); });
+    tmp.remove();
+    stopY = ys.slice();
+    stopLen.push(roadLen);
+    stopY.push(ys[ys.length - 1] + 260);
+
+    Object.assign(home.style, { left: inset - 20 + "px", top: ys[0] + "px" });
+    Object.assign(school.style, { left: xEnd + "px", top: ys[ys.length - 1] + "px" });
+  }
+
+  function placeBike(len) {
+    const path = roadPaths[0];
+    const p = path.getPointAtLength(len);
+    const a = path.getPointAtLength(Math.max(len - 3, 0)), b = path.getPointAtLength(Math.min(len + 3, roadLen));
+    let ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI, flip = 1;
+    if (b.x - a.x < 0) { ang -= 180; flip = -1; }
+    if (ang > 180) ang -= 360; else if (ang < -180) ang += 360;
+    ang = Math.max(-30, Math.min(30, ang)); // ở khúc cua xe vẫn đứng gần thẳng cho xinh
+    bike.style.transform = `translate(${p.x - 41}px, ${p.y - 50}px) rotate(${ang}deg) scaleX(${flip})`;
+  }
+  function bikeTick() {
+    const diff = bikeTarget - bikePos;
+    bikePos += Math.abs(diff) < 0.5 || reduceMotion ? diff : diff * 0.12;
+    placeBike(bikePos);
+    const moving = Math.abs(diff) > 1;
+    bike.classList.toggle("moving", moving);
+    bikeRaf = moving ? requestAnimationFrame(bikeTick) : 0;
+  }
+  function updateBike() {
+    if (!roadLen) return;
+    const y = window.innerHeight * 0.55 - grid.getBoundingClientRect().top;
+    let k = 0;
+    while (k < stopY.length - 1 && y >= stopY[k + 1]) k++;
+    const f = Math.min(Math.max((y - stopY[k]) / (stopY[k + 1] - stopY[k]), 0), 1);
+    bikeTarget = y <= stopY[0] ? 0 : k >= stopY.length - 1 ? roadLen : stopLen[k] + f * (stopLen[k + 1] - stopLen[k]);
+    if (!bikeRaf) bikeRaf = requestAnimationFrame(bikeTick);
+  }
+  buildRoad();
+  updateBike();
+  new ResizeObserver(() => { buildRoad(); updateBike(); }).observe(grid);
+  window.addEventListener("scroll", updateBike, { passive: true });
+  window.addEventListener("resize", updateBike);
 
   /* ---------------- Lá thư ---------------- */
   $("letterGreeting").textContent = window.LETTER.greeting;
@@ -287,7 +402,6 @@
   const petals = $("petals");
   const petalChars = ["🌸", "🌷", "💗", "✿", "🤍"];
   let petalTimer = null;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function spawnPetal() {
     const p = el("span", "petal", petalChars[Math.floor(Math.random() * petalChars.length)]);
     p.style.left = Math.random() * 100 + "%";
