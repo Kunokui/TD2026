@@ -44,6 +44,16 @@
   const insertAfter = new Map();
   extras.forEach((x, k) => insertAfter.set(Math.floor(((k + 1) * photos.length) / (extras.length + 1)), x));
 
+  // Ảnh gốc rất nặng nên dùng bản đã thu nhỏ trong image/thumb (800px) và image/view (1600px)
+  const thumbOf = (src) => src.replace("image/", "image/thumb/");
+  const viewOf = (src) => src.replace("image/", "image/view/");
+  const photoSizes = {
+    sm: "(max-width: 900px) 50vw, 280px",
+    md: "(max-width: 900px) 50vw, 380px",
+    lg: "(max-width: 900px) 100vw, 480px",
+    xl: "(max-width: 900px) 100vw, 580px",
+  };
+
   // Ảnh có gắn nốt nhạc -> bài hát tương ứng
   const songOfPhoto = new Map();
   songs.forEach((_, s) => songOfPhoto.set(2 + s * 6, s));
@@ -65,7 +75,11 @@
     btn.setAttribute("aria-label", "Xem ảnh " + (i + 1));
     btn.style.setProperty("--ar", ar);
     const img = el("img");
-    img.src = src; img.alt = "Ảnh kỷ niệm " + (i + 1);
+    // Album dùng ảnh thu nhỏ; màn hình nét cao với khung lớn thì lấy bản vừa
+    img.src = thumbOf(src);
+    img.srcset = `${thumbOf(src)} 800w, ${viewOf(src)} 1600w`;
+    img.sizes = photoSizes[size];
+    img.alt = "Ảnh kỷ niệm " + (i + 1);
     img.loading = "lazy"; img.decoding = "async";
     btn.append(img);
     btn.addEventListener("click", () => openLightbox(i));
@@ -268,7 +282,9 @@
   let lbIndex = 0;
   function showPhoto(i) {
     lbIndex = (i + photos.length) % photos.length;
-    lbImg.src = photos[lbIndex];
+    lbImg.src = viewOf(photos[lbIndex]);
+    // Tải sẵn ảnh trước và sau để bấm qua lại không phải chờ
+    [1, -1].forEach((d) => { new Image().src = viewOf(photos[(lbIndex + d + photos.length) % photos.length]); });
     lbImg.alt = "Ảnh kỷ niệm " + (lbIndex + 1);
     lbCap.textContent = (lbIndex + 1) + " / " + photos.length;
   }
