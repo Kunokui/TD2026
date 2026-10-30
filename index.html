@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Little Memories</title>
+  <meta name="description" content="Một cuốn sổ lưu niệm nhỏ dành tặng cô nhân ngày Nhà giáo Việt Nam 20/11.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌷</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap&subset=vietnamese" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked">
+
+  <!-- Phần 1: Mở món quà -->
+  <div id="intro" class="intro">
+    <button class="envelope" id="envelope" aria-label="Mở món quà">
+      <span class="env-back"></span>
+      <span class="env-letter">
+        <span class="env-letter-inner">
+          <span class="hand big">Gửi cô yêu quý 💌</span>
+          <span class="small">Chúc mừng ngày Nhà giáo Việt Nam 20/11</span>
+        </span>
+      </span>
+      <span class="env-front"></span>
+      <span class="env-flap"></span>
+      <span class="env-seal">♥</span>
+    </button>
+    <p class="intro-text hand">A little something for you…</p>
+    <p class="intro-hint">(nhấn vào phong bì để mở)</p>
+  </div>
+
+  <!-- Phần 2: Lời chào đầu album -->
+  <header class="hero" id="top">
+    <span class="sticker s1">🌷</span>
+    <span class="sticker s2">🌿</span>
+    <span class="sticker s3">✨</span>
+    <span class="sticker s4">🌼</span>
+    <p class="hero-date hand">20 · 11</p>
+    <h1>Our Little Memories</h1>
+    <p class="hero-sub"><em>“A little place filled with memories, smiles, and words I'll always remember.”</em></p>
+    <a class="btn" href="#album">Mở album ↓</a>
+  </header>
+
+  <!-- Phần 3–5: Album, câu nói, bất ngờ -->
+  <main id="album" class="album-wrap">
+    <div class="album-head">
+      <span class="tape"></span>
+      <h2>Album kỷ niệm</h2>
+      <p class="hand">những mảnh ghép nhỏ – nhấn vào ảnh, giấy note, hoa, phong bì hay máy ảnh thử xem nhé ✿</p>
+    </div>
+    <div class="album" id="albumGrid"></div>
+  </main>
+
+  <!-- Phần 7: Lá thư -->
+  <section class="letter-wrap" id="letter">
+    <article class="letter">
+      <p class="letter-greeting hand" id="letterGreeting"></p>
+      <div id="letterBody"></div>
+      <p class="letter-sign hand" id="letterSign"></p>
+    </article>
+  </section>
+
+  <!-- Phần 8: Lời kết -->
+  <footer class="ending" id="ending">
+    <div class="petals" id="petals" aria-hidden="true"></div>
+    <h2>Happy Vietnamese Teachers' Day!</h2>
+    <p class="ending-quote"><em>“Thank you for being a part of our memories.”</em></p>
+    <p class="hand ending-love">Made with love, just for you ♡</p>
+  </footer>
+
+  <!-- Lightbox ảnh -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose" aria-label="Đóng">×</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Ảnh trước">‹</button>
+    <figure class="lb-frame">
+      <img id="lbImg" alt="">
+      <figcaption class="hand" id="lbCap"></figcaption>
+    </figure>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Ảnh tiếp theo">›</button>
+  </div>
+
+  <!-- Giấy note phóng to -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" id="modalCard" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalClose" aria-label="Đóng">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Phần 6: Máy nghe nhạc mini -->
+  <aside class="player" id="player">
+    <div class="pl-list" id="plList" hidden>
+      <p class="pl-list-title hand">Playlist ♪</p>
+      <ol id="plItems"></ol>
+    </div>
+    <div class="pl-body">
+      <div class="cassette" aria-hidden="true">
+        <span class="reel"></span><span class="cassette-label"></span><span class="reel"></span>
+      </div>
+      <div class="pl-info">
+        <div class="pl-title"><span id="plTitle">Chưa phát</span></div>
+        <div class="pl-artist" id="plArtist">♪</div>
+      </div>
+      <div class="pl-controls">
+        <button id="plShuffle" class="pl-sm" title="Phát ngẫu nhiên" aria-label="Phát ngẫu nhiên">⤮</button>
+        <button id="plPrev" title="Bài trước" aria-label="Bài trước">⏮</button>
+        <button id="plPlay" class="pl-play" title="Phát / Dừng" aria-label="Phát">▶</button>
+        <button id="plNext" title="Bài tiếp theo" aria-label="Bài tiếp theo">⏭</button>
+        <button id="plRepeat" class="pl-sm" title="Lặp lại" aria-label="Lặp lại">↻</button>
+      </div>
+      <div class="pl-extra">
+        <span aria-hidden="true">🔈</span>
+        <input type="range" id="plVol" min="0" max="1" step="0.01" value="0.7" aria-label="Âm lượng">
+        <button id="plListBtn" class="pl-sm" title="Danh sách phát" aria-label="Danh sách phát">☰</button>
+      </div>
+      <div class="pl-progress"><span id="plBar"></span></div>
+    </div>
+    <button class="pl-toggle" id="plToggle" title="Thu gọn / mở rộng" aria-label="Thu gọn máy nghe nhạc">–</button>
+    <audio id="audio" preload="none"></audio>
+  </aside>
+
+  <script src="js/photos.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+# 🌷 Ý tưởng website 20/11 – Our Little Memories
+
+Một website mang phong cách **scrapbook (sổ lưu niệm)**, được tạo như một món quà nhỏ dành tặng cô nhân ngày Nhà giáo Việt Nam 20/11.
+
+Mục tiêu là tạo cảm giác như cô đang mở một cuốn album kỷ niệm: xem ảnh, đọc lại những câu nói thân thuộc, nghe những bài hát nhẹ nhàng và khám phá những lời nhắn bất ngờ.
+
+## 1. Phong cách thiết kế
+
+* **Phong cách:** Vintage scrapbook kết hợp cute pastel.
+* **Màu sắc:** Kem, hồng phấn, xanh lá nhạt, vàng bơ và nâu ấm.
+* **Cảm giác:** Ấm áp, nhẹ nhàng, đáng yêu và gần gũi.
+* **Trang trí:** Ảnh Polaroid, băng dính giấy, hoa ép khô, sticker, giấy note, nét vẽ tay và chữ viết tay.
+
+Font chữ có thể kết hợp:
+
+* Playfair Display: tiêu đề.
+* Nunito: nội dung.
+* Caveat: chữ viết tay.
+
+---
+
+## 2. Hành trình khám phá website
+
+Website là **một trang cuộn dài**, không chia thành nhiều trang riêng biệt.
+
+### Phần 1: Mở món quà 💌
+
+Khi truy cập, cô nhìn thấy một chiếc phong bì nằm giữa màn hình.
+
+Trên phong bì có dòng chữ:
+
+*“A little something for you…”*
+
+Khi nhấn vào:
+
+* Phong bì mở ra bằng animation.
+* Một lời chào nhỏ xuất hiện.
+* Nhạc có thể bắt đầu phát sau thao tác mở quà.
+* Website chuyển đến phần album.
+
+### Phần 2: Lời chào đầu album 🌷
+
+Một tiêu đề lớn xuất hiện:
+
+**Our Little Memories**
+
+*“A little place filled with memories, smiles, and words I'll always remember.”*
+
+Bên dưới có một nút nhỏ để bắt đầu hành trình khám phá.
+
+### Phần 3: Album ảnh kỷ niệm 📸
+
+Đây là phần quan trọng nhất của website.
+
+Khoảng **57 bức ảnh của cô** được sắp xếp xuyên suốt một trang dài.
+
+Cách trình bày:
+
+* Ảnh có khung Polaroid.
+* Kích thước và góc nghiêng thay đổi tự nhiên.
+* Một số ảnh có caption ngắn.
+* Có ảnh lớn nổi bật, có ảnh nhỏ nằm cạnh nhau.
+* Xen kẽ các sticker, hoa và giấy note.
+
+Khi nhấn vào ảnh:
+
+* Ảnh được phóng to.
+* Có thể chuyển qua lại giữa các ảnh.
+* Có nút đóng để quay về album.
+
+Không cần phân loại ảnh theo sự kiện hay chuyến đi. Cứ để chúng xuất hiện như những mảnh ghép kỷ niệm.
+
+### Phần 4: Những câu nói của cô 💬
+
+Đây là một trong những điểm đặc biệt nhất.
+
+Toàn bộ câu nói được lưu trong **`quote.txt`** sẽ trở thành những mảnh giấy note xuất hiện xen kẽ trong album.
+
+Ý tưởng trình bày:
+
+* Mỗi câu nói nằm trên một tờ giấy nhỏ.
+* Một số câu xuất hiện ngay trên album.
+* Một số câu được giấu sau phong bì mini hoặc sticker.
+* Nhấn vào giấy note để mở rộng và đọc đầy đủ câu nói.
+* Có thể kèm một lời chia sẻ ngắn của em bên dưới.
+
+Ví dụ về cách thể hiện:
+
+> *Một câu nói của cô.*
+
+*Có những điều tưởng chừng rất bình thường, nhưng sau này nhìn lại mới thấy chúng thật đáng nhớ.*
+
+Điểm quan trọng: Giữ nguyên những câu nói thật của cô trong `quote.txt`, không tự sáng tác rồi gán cho cô.
+
+### Phần 5: Những điều bất ngờ ✨
+
+Rải rác trong album có một số chi tiết tương tác:
+
+| Vật trang trí | Tương tác                       |
+| ------------- | ------------------------------- |
+| 🌷 Hoa nhỏ    | Nhấn để hiện lời chúc           |
+| 💌 Phong bì   | Mở một câu nói trong quote.txt  |
+| 📎 Giấy note  | Hiện lời nhắn cá nhân           |
+| 📷 Máy ảnh    | Hiển thị một bức ảnh ngẫu nhiên |
+| 🎵 Nốt nhạc   | Phát bài hát gắn với kỷ niệm    |
+
+Chỉ nên sử dụng khoảng 3–4 kiểu tương tác chính để không khiến album trở nên rối mắt.
+
+### Phần 6: Góc âm nhạc 🎧
+
+Âm nhạc được lấy từ các file `.mp3` trong thư mục `audio`.
+
+Sử dụng **một playlist duy nhất** chứa tất cả bài hát.
+
+Trình phát nhạc được thiết kế giống một chiếc máy nghe nhạc mini vintage, nằm cố định ở góc dưới màn hình.
+
+Các chức năng:
+
+* Play/Pause.
+* Bài trước/Bài tiếp theo.
+* Hiển thị tên bài hát và ca sĩ.
+* Mở danh sách phát.
+* Phát ngẫu nhiên.
+* Lặp lại bài hát hoặc playlist.
+* Điều chỉnh âm lượng.
+* Tự chuyển bài khi bài hát kết thúc.
+
+Một số bức ảnh có thể gắn với bài hát riêng. Khi nhấn vào biểu tượng nốt nhạc trên ảnh, trình phát sẽ chuyển đến bài hát tương ứng.
+
+Nhạc vẫn tiếp tục phát khi cô cuộn qua các phần khác của album.
+
+### Phần 7: Lá thư cuối album 💗
+
+Sau khi khám phá hết ảnh và những câu nói, cô sẽ đến một lá thư viết tay.
+
+Nội dung gồm:
+
+* Lời cảm ơn cô.
+* Những điều em học được từ cô.
+* Những kỷ niệm đáng nhớ.
+* Những điều em muốn nói nhưng chưa có dịp nói.
+* Lời chúc nhân ngày 20/11.
+
+Phần này nên có thiết kế tối giản hơn album để tạo cảm giác chân thành và lắng đọng.
+
+### Phần 8: Lời kết 🌸
+
+Cuối trang xuất hiện lời chúc:
+
+**Happy Vietnamese Teachers' Day!**
+
+*“Thank you for being a part of our memories.”*
+
+*Made with love, just for you ♡*
+
+Có thể thêm hiệu ứng hoa bay nhẹ hoặc một vài trái tim nhỏ.
+
+---
+
+## 3. Những thành phần chính của món quà
+
+| Thành phần | Nội dung                                    |
+| ---------- | ------------------------------------------- |
+| Album ảnh  | Khoảng 57 ảnh trong thư mục `image`         |
+| Câu nói    | Toàn bộ câu nói trong `quote.txt`           |
+| Âm nhạc    | Playlist từ các file MP3 trong `audio`      |
+| Tương tác  | Hoa, phong bì, giấy note, máy ảnh, nốt nhạc |
+| Bức thư    | Lời cảm ơn và chia sẻ cá nhân               |
+| Lời kết    | Lời chúc 20/11                              |
+
+## 4. Cảm giác mà website hướng đến
+
+Mình muốn khi cô mở website, trải nghiệm sẽ giống như:
+
+1. **Bất ngờ:** Một chiếc phong bì nhỏ đang chờ được mở.
+2. **Thích thú:** Một cuốn album với những bức ảnh đáng yêu.
+3. **Hoài niệm:** Bắt gặp những câu nói quen thuộc của chính mình.
+4. **Thư giãn:** Vừa xem ảnh vừa nghe những bài hát nhẹ nhàng.
+5. **Xúc động:** Đọc lá thư và lời cảm ơn ở cuối hành trình.
+
+### ❤️ Tinh thần cốt lõi
+
+Đây không đơn thuần là một website trưng bày ảnh. Nó giống như một cuốn sổ lưu niệm kỹ thuật số, nơi **57 bức ảnh, những câu nói trong `quote.txt`, âm nhạc và những lời nhắn cá nhân** cùng kể một câu chuyện nhỏ về cô.
+
+Điều quan trọng nhất không phải là có thật nhiều hiệu ứng, mà là khiến cô cảm nhận được sự trân trọng và tình cảm được gửi gắm trong món quà này.
