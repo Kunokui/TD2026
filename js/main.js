@@ -306,15 +306,46 @@
     const b = el("button");
     b.append(document.createTextNode(s.title), el("small", null, ""));
     b.lastChild.textContent = s.artist || "♪";
+    b.dataset.song = i;
     b.addEventListener("click", () => playSong(i));
     li.append(b);
     items.append(li);
   });
 
+  // Tải sẵn bài hát vào bộ nhớ để lúc đổi bài là phát ngay, không phải chờ tải
+  const songUrl = (i) => "audio/" + encodeURIComponent(songs[i].file);
+  const pending = new Map(), ready = new Map(); // chỉ số bài -> đang tải / blob URL
+  const MAX_READY = 4;
+  function prefetch(i) {
+    i = (i + songs.length) % songs.length;
+    if (pending.has(i) || ready.has(i)) return;
+    pending.set(i, fetch(songUrl(i))
+      .then((r) => (r.ok ? r.blob() : Promise.reject()))
+      .then((b) => {
+        ready.set(i, URL.createObjectURL(b));
+        // Giữ tối đa vài bài trong bộ nhớ, bỏ bài cũ nhất (trừ bài đang phát)
+        for (const [k, u] of ready) {
+          if (ready.size <= MAX_READY) break;
+          if (k !== current) { URL.revokeObjectURL(u); ready.delete(k); }
+        }
+      })
+      .catch(() => {})
+      .finally(() => pending.delete(i)));
+  }
+  let upNext = 0;
+  function pickUpNext() {
+    if (shuffle && songs.length > 1) {
+      do { upNext = Math.floor(Math.random() * songs.length); } while (upNext === current);
+    } else upNext = (current + 1) % songs.length;
+  }
+
   function loadSong(i) {
     current = (i + songs.length) % songs.length;
     const s = songs[current];
-    audio.src = "audio/" + encodeURIComponent(s.file);
+    const cached = ready.get(current);
+    if (cached) { ready.delete(current); ready.set(current, cached); } // đánh dấu vừa dùng
+    audio.src = cached || songUrl(current);
+    pickUpNext();
     $("plTitle").textContent = s.title;
     $("plArtist").textContent = s.artist || "♪";
     const titleBox = $("plTitle").parentElement;
@@ -328,6 +359,7 @@
     audio.play().catch(() => {});
   }
   function nextIndex(step) {
+    if (step > 0) return upNext;
     if (shuffle && songs.length > 1) {
       let n; do { n = Math.floor(Math.random() * songs.length); } while (n === current);
       return n;
@@ -343,7 +375,22 @@
     if (audio.currentTime > 3) { audio.currentTime = 0; return; }
     playSong(nextIndex(-1));
   });
-  $("plShuffle").addEventListener("click", (e) => { shuffle = !shuffle; e.currentTarget.classList.toggle("on", shuffle); });
+  $("plShuffle").addEventListener("click", (e) => {
+    shuffle = !shuffle;
+    e.currentTarget.classList.toggle("on", shuffle);
+    pickUpNext();
+    if (current >= 0 && audio.readyState >= 4) prefetch(upNext);
+  });
+
+  // Bài đang phát đã tải đủ thì tải sẵn bài kế tiếp; rê chuột vào bài nào thì tải sẵn bài đó
+  audio.addEventListener("canplaythrough", () => prefetch(upNext));
+  let hoverTimer = 0;
+  document.addEventListener("pointerover", (e) => {
+    const b = e.target.closest("[data-song]");
+    clearTimeout(hoverTimer);
+    if (b) hoverTimer = setTimeout(() => prefetch(+b.dataset.song), 200);
+  });
+  prefetch(0); // bài đầu tiên phát ngay khi mở phong bì
   const repeatBtn = $("plRepeat");
   const paintRepeat = () => {
     repeatBtn.classList.toggle("on", repeat !== "off");
