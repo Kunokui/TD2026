@@ -1,4 +1,4 @@
-# 🌷 Our Little Memories — TD2026
+# 🌷 Your Little Memories — TD2026
 
 Một cuốn sổ lưu niệm số nhỏ dành tặng cô nhân ngày Nhà giáo Việt Nam 20/11.
 

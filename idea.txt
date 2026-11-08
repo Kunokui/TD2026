@@ -1,4 +1,4 @@
-# 🌷 Ý tưởng website 20/11 – Our Little Memories
+# 🌷 Ý tưởng website 20/11 – Your Little Memories
 
 Một website mang phong cách **scrapbook (sổ lưu niệm)**, được tạo như một món quà nhỏ dành tặng cô nhân ngày Nhà giáo Việt Nam 20/11.
 
@@ -42,7 +42,7 @@ Khi nhấn vào:
 
 Một tiêu đề lớn xuất hiện:
 
-**Our Little Memories**
+**Your Little Memories**
 
 *“A little place filled with memories, smiles, and words I'll always remember.”*
 

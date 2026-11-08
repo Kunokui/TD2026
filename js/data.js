@@ -100,12 +100,15 @@ window.WISHES = [
 
 // Lá thư cuối album – hãy sửa lại bằng lời của chính em nhé.
 window.LETTER = {
-  greeting: "Gửi cô của em,",
+  greeting: "Hello, teacher! It's Đạt here.",
   paragraphs: [
-    "Nhân ngày 20/11, em muốn gửi đến cô một cuốn album nhỏ – nơi em gom lại những tấm ảnh, những câu nói và những bài hát gắn với những ngày đã qua. Có thể nó không lớn lao, nhưng mỗi mảnh ghép trong đây đều là những điều em thật lòng trân trọng.",
-    "Em cảm ơn cô vì đã kiên nhẫn với tụi em, vì những bài học trên lớp và cả những bài học không nằm trong sách vở. Từ cô, em học được rằng có thể đi qua nhiều chuyện mà vẫn dịu dàng với cuộc đời, và rằng trưởng thành không có nghĩa là phải quên đi phiên bản cũ của mình.",
-    "Có những kỷ niệm em sẽ nhớ mãi: những buổi học, những lần cô cười, những câu chuyện cô kể. Có những điều em muốn nói từ lâu nhưng chưa có dịp – rằng cô đã là một phần rất đẹp trong những năm tháng của em.",
-    "Chúc cô luôn mạnh khỏe, bình an và hạnh phúc. Mong những ngày sắp tới của cô sẽ thật nhẹ nhàng, và cô luôn biết rằng có những học trò vẫn luôn ở đây, dù có khi chỉ lặng lẽ thôi.",
+    "For Vietnamese Teachers' Day (November 20th), I made this little website as a letter to you. You can also think of it as a small photo album, filled with wonderful moments and memories from your life.",
+    "Honestly, I don't really know what to say.",
+    "I just hope that you will always be at peace, stay healthy, and become even more beautiful with each passing day.",
+    "I hope you always have plenty of reasons to smile and laugh, and that you can experience the happiest moments in life.",
+    "No matter how many difficulties or worries life brings, I believe you will be able to overcome them all. But whenever you feel tired, please don't forget to pause and give yourself some time to rest.",
+    "And I'll always be here, cheering you on from behind. If you ever feel like talking, you can always share your thoughts with me. I may not be mature or experienced enough to give you the best advice or help you solve your problems, but I'll always be more than willing to listen.",
+    "To sum it all up, thank you so much for everything.",
   ],
-  signature: "Thương cô rất nhiều,\nHọc trò của cô ♡",
+  signature: "Happy Vietnamese Teachers' Day! ❤️",
 };
