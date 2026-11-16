@@ -361,6 +361,9 @@
     const cached = ready.get(current);
     if (cached) { ready.delete(current); ready.set(current, cached); } // đánh dấu vừa dùng
     audio.src = cached || songUrl(current);
+    // Nhảy tới đoạn có lời ngay khi biết độ dài bài
+    const idx = current;
+    if (s.start) audio.addEventListener("loadedmetadata", () => { if (current === idx) audio.currentTime = s.start; }, { once: true });
     pickUpNext();
     $("plTitle").textContent = s.title;
     $("plArtist").textContent = s.artist || "♪";
@@ -370,6 +373,7 @@
     [...items.children].forEach((li, k) => li.classList.toggle("current", k === current));
     document.querySelectorAll(".note-btn").forEach((n) => n.classList.toggle("playing", +n.dataset.song === current));
   }
+  const songStart = () => (current >= 0 && songs[current].start) || 0;
   function playSong(i) {
     loadSong(i);
     audio.play().catch(() => {});
@@ -388,7 +392,7 @@
   });
   $("plNext").addEventListener("click", () => playSong(nextIndex(1)));
   $("plPrev").addEventListener("click", () => {
-    if (audio.currentTime > 3) { audio.currentTime = 0; return; }
+    if (audio.currentTime > songStart() + 3) { audio.currentTime = songStart(); return; }
     playSong(nextIndex(-1));
   });
   $("plShuffle").addEventListener("click", (e) => {
@@ -438,7 +442,7 @@
     $("plBar").style.width = audio.duration ? (audio.currentTime / audio.duration) * 100 + "%" : "0";
   });
   audio.addEventListener("ended", () => {
-    if (repeat === "one") { audio.currentTime = 0; audio.play(); return; }
+    if (repeat === "one") { audio.currentTime = songStart(); audio.play(); return; }
     if (!shuffle && repeat === "off" && current === songs.length - 1) return;
     playSong(nextIndex(1));
   });

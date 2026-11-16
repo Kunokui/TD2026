@@ -1,16 +1,17 @@
 // Nội dung của món quà – có thể chỉnh sửa trực tiếp ở đây.
 
 // Playlist: file nằm trong thư mục audio/. Điền thêm tên ca sĩ nếu còn trống.
+// start: giây bắt đầu phát (ngay trước câu hát đầu tiên). Bỏ trống thì phát từ đầu bài.
 window.SONGS = [
   { file: "Maroon 5 - Memories (Lyrics).mp3", title: "Memories", artist: "Maroon 5" },
-  { file: "Hẹn em dưới pháo hoa Ân Ngờ và Kphuong [Official MV].mp3", title: "Hẹn Em Dưới Pháo Hoa", artist: "Ân Ngờ & Kphuong" },
-  { file: "Vườn mây vừa hay Ân Ngờ ft. MYLINA (OFFICIAL VISUALIZE) [Mini Album 0 Ngờ].mp3", title: "Vườn Mây Vừa Hay", artist: "Ân Ngờ ft. MYLINA" },
-  { file: "Hayd Head In The Clouds Official Video.mp3", title: "Head In The Clouds", artist: "Hayd" },
-  { file: "Phép Màu Đàn Cá Gỗ OST Mounter x MAYDAYs Minh Tốc Official MV.mp3", title: "Phép Màu (Đàn Cá Gỗ OST)", artist: "MAYDAYs ft. Minh Tốc" },
+  { file: "Hẹn em dưới pháo hoa Ân Ngờ và Kphuong [Official MV].mp3", title: "Hẹn Em Dưới Pháo Hoa", artist: "Ân Ngờ & Kphuong", start: 34.5 },
+  { file: "Vườn mây vừa hay Ân Ngờ ft. MYLINA (OFFICIAL VISUALIZE) [Mini Album 0 Ngờ].mp3", title: "Vườn Mây Vừa Hay", artist: "Ân Ngờ ft. MYLINA", start: 12 },
+  { file: "Hayd Head In The Clouds Official Video.mp3", title: "Head In The Clouds", artist: "Hayd", start: 14.5 },
+  { file: "Phép Màu Đàn Cá Gỗ OST Mounter x MAYDAYs Minh Tốc Official MV.mp3", title: "Phép Màu (Đàn Cá Gỗ OST)", artist: "MAYDAYs ft. Minh Tốc", start: 2.5 },
   { file: "Nhẹ Buông.mp3", title: "Nhẹ Buông", artist: "" },
-  { file: "Làm Sao Để Em Tựa Vào.mp3", title: "Làm Sao Để Em Tựa Vào", artist: "" },
-  { file: "TUẤN CRY - MỐI DUYÊN VÀNG - MV Animation (feat. VÕ THU HÀ).mp3", title: "Mối Duyên Vàng", artist: "Tuấn Cry ft. Võ Thu Hà" },
-  { file: "Chàng Trai Bất Tử.mp3", title: "Chàng Trai Bất Tử", artist: "" },
+  { file: "Làm Sao Để Em Tựa Vào.mp3", title: "Làm Sao Để Em Tựa Vào", artist: "", start: 28.5 },
+  { file: "TUẤN CRY - MỐI DUYÊN VÀNG - MV Animation (feat. VÕ THU HÀ).mp3", title: "Mối Duyên Vàng", artist: "Tuấn Cry ft. Võ Thu Hà", start: 3.5 },
+  { file: "Chàng Trai Bất Tử.mp3", title: "Chàng Trai Bất Tử", artist: "", start: 33.3 },
 ];
 
 // Toàn bộ câu nói trong quote.txt – giữ nguyên văn.
