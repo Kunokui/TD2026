@@ -463,7 +463,7 @@
 
   /* ---------------- Hoa bay ở lời kết ---------------- */
   const petals = $("petals");
-  const petalChars = ["🌸", "🌷", "💗", "✿", "🤍"];
+  const petalChars = ["🌸", "🌷", "💗", "✿", "🤍", "🦀", "🐘"];
   let petalTimer = null;
   function spawnPetal() {
     const p = el("span", "petal", petalChars[Math.floor(Math.random() * petalChars.length)]);

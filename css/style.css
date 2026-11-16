@@ -226,6 +226,42 @@ img { display: block; max-width: 100%; }
 .petal { position: absolute; top: -40px; font-size: 22px; animation: fall linear forwards; }
 @keyframes fall { to { transform: translate(var(--dx), 110vh) rotate(var(--rot)); opacity: .2; } }
 
+/* ---------- Cua & voi ---------- */
+.mascot { position: absolute; z-index: 2; display: block; cursor: pointer; filter: drop-shadow(0 4px 6px rgba(90,60,40,.18)); -webkit-tap-highlight-color: transparent; }
+.mascot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.mascot .m-claw, .mascot .m-trunk, .mascot .m-ear { transform-box: fill-box; }
+.mascot .m-claw-l { transform-origin: 100% 100%; animation: snap-l 1.6s ease-in-out infinite; }
+.mascot .m-claw-r { transform-origin: 0% 100%; animation: snap-r 1.6s ease-in-out infinite; }
+.mascot .m-trunk { transform-origin: 30% 0%; animation: trunk 3s ease-in-out infinite; }
+.mascot .m-ear { animation: ear 2.4s ease-in-out infinite; }
+.mascot .m-ear-l { transform-origin: 100% 50%; }
+.mascot .m-ear-r { transform-origin: 0% 50%; }
+.mascot .m-eyes { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+.mascot[data-mascot="crab"] { animation: scuttle 3.2s ease-in-out infinite; }
+.mascot[data-mascot="elephant"] { animation: sway 4s ease-in-out infinite; }
+.mascot.boop svg { animation: boop .55s cubic-bezier(.3,1.6,.5,1); }
+.m-heart { position: absolute; left: 50%; top: 10%; font-size: 22px; pointer-events: none; animation: m-heart 1s ease-out forwards; }
+@keyframes snap-l { 0%, 60%, 100% { transform: rotate(0); } 70%, 90% { transform: rotate(-14deg); } 80% { transform: rotate(4deg); } }
+@keyframes snap-r { 0%, 60%, 100% { transform: rotate(0); } 70%, 90% { transform: rotate(14deg); } 80% { transform: rotate(-4deg); } }
+@keyframes trunk { 50% { transform: rotate(7deg); } }
+@keyframes ear { 50% { transform: scaleX(.86); } }
+@keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+@keyframes scuttle { 0%, 100% { translate: 0 0; } 25% { translate: 10px -2px; } 50% { translate: 0 0; } 75% { translate: -10px -2px; } }
+@keyframes sway { 50% { translate: 0 -6px; rotate: -2deg; } }
+@keyframes boop { 40% { transform: translateY(-16px) scale(1.08, .94); } }
+@keyframes m-heart { from { opacity: 1; transform: translate(-50%, 0) scale(.6); } to { opacity: 0; transform: translate(calc(-50% + var(--dx)), -70px) scale(1.2); } }
+
+.hero-crab { width: clamp(84px, 13vw, 140px); left: 5%; bottom: 5%; }
+.hero-elephant { width: clamp(100px, 15vw, 170px); right: 5%; top: 7%; }
+.head-crab { width: 74px; right: -22px; top: -40px; rotate: 12deg; }
+.letter { position: relative; }
+.letter-elephant { width: clamp(96px, 16vw, 130px); right: -14px; top: -62px; }
+.letter-crab { width: clamp(64px, 10vw, 84px); left: -18px; bottom: -30px; }
+.ending-friends { position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 28px; margin-top: 26px; }
+.ending-friends .mascot { position: relative; }
+.ending-friends [data-mascot="crab"] { width: 96px; }
+.ending-friends [data-mascot="elephant"] { width: 140px; animation-delay: -1.5s; }
+
 /* ---------- Lightbox ---------- */
 .lightbox {
   position: fixed; inset: 0; z-index: 90; background: rgba(40, 28, 20, .88);
@@ -342,6 +378,9 @@ img { display: block; max-width: 100%; }
   .road-edge { stroke-width: 28; }
   .road-base { stroke-width: 21; }
   .road-sign { font-size: 26px; }
+  .head-crab { width: 58px; right: -8px; top: -34px; }
+  .letter-elephant { right: -4px; top: -52px; }
+  .letter-crab { left: -6px; }
   .player { left: 16px; right: 16px; width: auto; }
   .player.mini { left: auto; width: 64px; }
 }
